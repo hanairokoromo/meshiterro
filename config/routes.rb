@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   root :to => 'homes#top'
   
   get '/post_images' => 'post_images#index', as: 'post_images'
-  resources :post_images, only: [:new, :create, :index, :show, :destroy]
+  resources :post_images, only: [:new, :create, :index, :show, :destroy] do
+    resource :favorites, only: [:create, :destroy]
+    resources :post_comments, only: [:create, :destroy]
+  end
   
   get 'users/:id/edit' => 'users#edit', as: 'edit_users'
   resources :users, only: [:show, :edit, :update]
